@@ -1,0 +1,298 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "358e5ff0-64df-42de-8490-6bf2a8cd3eea",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#import libraries\n",
+    "\n",
+    "\n",
+    "from bs4 import BeautifulSoup\n",
+    "import requests\n",
+    "import smtplib\n",
+    "import time\n",
+    "import datetime"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 32,
+   "id": "8dbf73bb-ac3b-452f-a6dc-eb51ffebc153",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n",
+      "                    Funny Got Data MIS Data Systems Business Analyst T-Shirt\n",
+      "                   \n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "                    $16.99\n",
+      "                   \n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "                      $\n",
+      "                     \n",
+      "\n",
+      "                      16\n",
+      "                      \n",
+      "                       .\n",
+      "                      \n",
+      "\n",
+      "\n",
+      "                      99\n",
+      "                     \n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Connect to website\n",
+    "\n",
+    "URL = 'https://www.amazon.com/Funny-Data-Systems-Business-Analyst/dp/B07FNW9FGJ/ref=sr_1_8?crid=7UJC1YULLM8O&dib=eyJ2IjoiMSJ9.gxMxhmhhli6beTzFj8PZZlG0nE9SZQplkaSox68h2gWVeNdhl9da8yWLNP3GAQln_3y5139fQE2XwtQHWc2AJadqgakAXJqV7A1FHQ3JPM472THzSy8VIJkW43bAlVssk8SJSrmZo6OfMQd0JJ6FgJy7yLd-MP_UNyCld8uya4u9bdIND_PwheR-_4k5qv_9ewTAVgRtZ8Ahmtc9kAINcMzXGkwD9x86URYo8xCJySWCt8jFmIdg2h94q1hkS7-KiuxICVRcmZ-6aLVr4Ffm_pHmfQ33Un1f5XOc1kDcJQk.EBbgjg_t1VyI96Xroj36l78mfVwwyXwvGGZgWcv68uM&dib_tag=se&keywords=data%2Banalyst%2Btshirt&qid=1712435208&sprefix=data%2Banalyst%2Btshirt%2Caps%2C284&sr=8-8'\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "headers= {\"User-Agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36\",\"Accept-Encoding\": \"gzip, deflate, br, zstd\", \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\", \"DNT\":\"1\",\"Connection\":\"close\", \"Upgrade-Insecure-Requests\":\"1\"}\n",
+    "\n",
+    "page= requests.get(URL, headers= headers)\n",
+    "\n",
+    "soup1=BeautifulSoup(page.content, \"html.parser\")\n",
+    "\n",
+    "soup2= BeautifulSoup(soup1.prettify(),\"html.parser\")\n",
+    "\n",
+    "title= soup2.find(id='productTitle').get_text()\n",
+    "\n",
+    "price= soup2.find(id='corePriceDisplay_desktop_feature_div').get_text()\n",
+    "\n",
+    "print(title)\n",
+    "\n",
+    "print(price)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 33,
+   "id": "86413a88-8aab-48aa-a410-f1e1f55484ff",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "price= price.strip()[1:6]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 34,
+   "id": "7524cf85-f0ba-48c6-88bb-f7b354502592",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "16.99\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(price)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "819468a9-270f-42f2-a861-70948a41fc51",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "title=title.strip()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "0f74a49b-f835-4472-81d3-a92bdeb14280",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Funny Got Data MIS Data Systems Business Analyst T-Shirt\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(title)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "id": "c00cabca-fa59-499e-8dd4-2446ffa636dd",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "2024-04-06\n"
+     ]
+    }
+   ],
+   "source": [
+    "import datetime\n",
+    "today= datetime.date.today()\n",
+    "print(today)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "id": "ce1537ad-3d2d-4665-a7fa-90bba5859e7c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import csv\n",
+    "\n",
+    "header= ['Title','Price','Date']\n",
+    "\n",
+    "data=[title,price,today]\n",
+    "\n",
+    "with open('AmazonWebScraper.csv', 'w', newline='', encoding='UTF8') as f:\n",
+    "    writer=csv.writer(f)\n",
+    "    writer.writerow(header)\n",
+    "    writer.writerow(data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "id": "ca7221d4-22af-4635-887a-bdad93185bbc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "id": "fb0be9df-4745-4a57-b6b0-41a1faeb8a98",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#now we can append data into the csv\n",
+    "\n",
+    "with open('AmazonWebScraper.csv', 'a+', newline='', encoding='UTF8') as f:\n",
+    "    writer=csv.writer(f)\n",
+    "    writer.writerow(data)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "id": "169b18d5-feb3-4769-b361-ec9a0305513b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def check_price():\n",
+    "    URL = 'https://www.amazon.com/Funny-Data-Systems-Business-Analyst/dp/B07FNW9FGJ/ref=sr_1_8?crid=7UJC1YULLM8O&dib=eyJ2IjoiMSJ9.gxMxhmhhli6beTzFj8PZZlG0nE9SZQplkaSox68h2gWVeNdhl9da8yWLNP3GAQln_3y5139fQE2XwtQHWc2AJadqgakAXJqV7A1FHQ3JPM472THzSy8VIJkW43bAlVssk8SJSrmZo6OfMQd0JJ6FgJy7yLd-MP_UNyCld8uya4u9bdIND_PwheR-_4k5qv_9ewTAVgRtZ8Ahmtc9kAINcMzXGkwD9x86URYo8xCJySWCt8jFmIdg2h94q1hkS7-KiuxICVRcmZ-6aLVr4Ffm_pHmfQ33Un1f5XOc1kDcJQk.EBbgjg_t1VyI96Xroj36l78mfVwwyXwvGGZgWcv68uM&dib_tag=se&keywords=data%2Banalyst%2Btshirt&qid=1712435208&sprefix=data%2Banalyst%2Btshirt%2Caps%2C284&sr=8-8'\n",
+    "\n",
+    "    headers= {\"User-Agent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36\",\"Accept-Encoding\": \"gzip, deflate, br, zstd\", \"Accept\": \"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7\", \"DNT\":\"1\",\"Connection\":\"close\", \"Upgrade-Insecure-Requests\":\"1\"}\n",
+    "\n",
+    "    page= requests.get(URL, headers= headers)\n",
+    "\n",
+    "    soup1=BeautifulSoup(page.content, \"html.parser\")\n",
+    "\n",
+    "    soup2= BeautifulSoup(soup1.prettify(),\"html.parser\")\n",
+    "    \n",
+    "    title= soup2.find(id='productTitle').get_text()\n",
+    "\n",
+    "    price= soup2.find(id='corePriceDisplay_desktop_feature_div').get_text()\n",
+    "    \n",
+    "    price= price.strip()[1:6]\n",
+    "    title=title.strip()\n",
+    "    \n",
+    "    import datetime\n",
+    "    today= datetime.date.today()\n",
+    "\n",
+    "    import csv\n",
+    "\n",
+    "    header= ['Title','Price','Date']\n",
+    "\n",
+    "    data=[title,price,today]\n",
+    "\n",
+    "    with open('AmazonWebScraper.csv', 'a+', newline='', encoding='UTF8') as f:\n",
+    "        writer=csv.writer(f)\n",
+    "        writer.writerow(data)\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "242a020d-143c-44d2-a957-f249b7938818",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "while(True):\n",
+    "    check_price()\n",
+    "    time.sleep(86400)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cfc57079-dee1-4481-b113-5a5dd18ea8ba",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
